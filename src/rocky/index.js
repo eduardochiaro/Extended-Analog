@@ -4,6 +4,14 @@ var rocky = require('rocky');
 // Global object to store weather data
 var weather;
 
+var hourColor = "red";
+var fontFamily = "Droid-serif";
+var fontSize = "12px";
+
+var week = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+
 rocky.on('hourchange', function(event) {
   // Send a message to fetch the weather information (on startup and every hour)
   rocky.postMessage({'fetch': true});
@@ -38,6 +46,8 @@ rocky.on('draw', function(event) {
   if (weather) {
     drawWeather(ctx, weather);
   }
+	
+	 drawCalendar(ctx);
 
   // Determine the width and height of the display
   var w = ctx.canvas.unobstructedWidth;
@@ -63,19 +73,39 @@ rocky.on('draw', function(event) {
   var hourAngle = fractionToRadian(hourFraction);
 
   // Draw the hour hand
-  drawHand(ctx, cx, cy, hourAngle, maxLength * 0.6, 'lightblue');
+  drawHand(ctx, cx, cy, hourAngle, maxLength * 0.6, hourColor);
 });
 
+
+function drawCalendar(ctx) {
+  var currentTime = new Date();
+	
+	 var topCalendar = week[currentTime.getDay()] + " " + currentTime.getDate();
+	 var bottomCalendar = monthNames[currentTime.getMonth()] + " " + currentTime.getFullYear();
+	
+	 var Wposition = 30;
+	
+  // Draw the text, top center
+  ctx.fillStyle = 'white';
+  ctx.textAlign = 'center';
+  ctx.font = fontSize + ' ' + fontFamily;
+  ctx.fillText(topCalendar, Wposition, ctx.canvas.unobstructedHeight/2 - 12);
+  ctx.fillText(bottomCalendar, Wposition, ctx.canvas.unobstructedHeight/2);
+}
 function drawWeather(ctx, weather) {
   // Create a string describing the weather
   //var weatherString = weather.celcius + 'ºC, ' + weather.desc;
-  var weatherString = weather.fahrenheit + 'ºF, ' + weather.desc;
+  var weatherString = weather.fahrenheit + 'ºF';
+	 var weatherDesc = weather.desc;
+	
+	var Wposition = ctx.canvas.unobstructedWidth - 20;
 
   // Draw the text, top center
-  ctx.fillStyle = 'lightgray';
+  ctx.fillStyle = 'white';
   ctx.textAlign = 'center';
-  ctx.font = '14px Gothic';
-  ctx.fillText(weatherString, ctx.canvas.unobstructedWidth / 2, 2);
+  ctx.font = fontSize + ' ' + fontFamily;
+  ctx.fillText(weatherString, Wposition, ctx.canvas.unobstructedHeight/2 - 12);
+  ctx.fillText(weatherDesc, Wposition, ctx.canvas.unobstructedHeight/2);
 }
 
 function drawHand(ctx, cx, cy, angle, length, color) {
