@@ -1,0 +1,32 @@
+{
+    "author": "Eduardo Chiaro",
+    "dependencies": {},
+    "keywords": [
+        "pebble-app"
+    ],
+    "name": "extendedtictoc",
+    "pebble": {
+        "capabilities": [
+            "location",
+            "configurable"
+        ],
+        "displayName": "Extended Tictoc",
+        "enableMultiJS": true,
+        "messageKeys": [],
+        "projectType": "rocky",
+        "resources": {
+            "media": []
+        },
+        "sdkVersion": "3",
+        "targetPlatforms": [
+            "basalt",
+            "diorite",
+            "emery"
+        ],
+        "uuid": "85593232-d775-44de-9ec4-37a3c377ecef",
+        "watchapp": {
+            "watchface": true
+        }
+    },
+    "version": "0.1.0"
+}
