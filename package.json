@@ -7,8 +7,7 @@
     "name": "extendedtictoc",
     "pebble": {
         "capabilities": [
-            "location",
-            "configurable"
+            "location"
         ],
         "displayName": "Extended Tictoc",
         "enableMultiJS": true,
