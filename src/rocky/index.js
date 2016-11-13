@@ -62,18 +62,38 @@ rocky.on('draw', function(event) {
   var maxLength = (Math.min(w, h) - 20) / 2;
 
   // Calculate the minute hand angle
-  var minuteFraction = (d.getMinutes()) / 60;
+	 var _minutes = d.getMinutes();
+  var minuteFraction = _minutes / 60;
   var minuteAngle = fractionToRadian(minuteFraction);
+	
+	 if(_minutes >= 30){
+				_minutes = _minutes - 30;
+		}else if(_minutes < 30){
+			 _minutes = _minutes + 30;
+		}
+	
+  var minuteReverseAngle = fractionToRadian(_minutes / 60);
 
   // Draw the minute hand
-  drawHand(ctx, cx, cy, minuteAngle, maxLength, 'white');
+  drawHand(ctx, cx, cy, minuteAngle, minuteReverseAngle, maxLength, 'white');
 
   // Calculate the hour hand angle
-  var hourFraction = (d.getHours() % 12 + minuteFraction) / 12;
+	 var _hour = d.getHours();
+  var hourFraction = (_hour % 12 + minuteFraction) / 12;
   var hourAngle = fractionToRadian(hourFraction);
+		
+	if(_hour >= 6){
+				_hour =  _hour - 6;
+		}else if(_hour < 6){
+			 _hour = _hour + 6;
+		}
+	
+  var hourReverseAngle = fractionToRadian((_hour % 12 + ( minuteFraction)) / 12);
 
   // Draw the hour hand
-  drawHand(ctx, cx, cy, hourAngle, maxLength * 0.6, hourColor);
+  drawHand(ctx, cx, cy, hourAngle, hourReverseAngle, maxLength * 0.6, hourColor);
+		
+	 drawRound(ctx, cx, cy, hourColor);
 });
 
 
@@ -89,7 +109,7 @@ function drawCalendar(ctx) {
   ctx.fillStyle = 'white';
   ctx.textAlign = 'center';
   ctx.font = fontSize + ' ' + fontFamily;
-  ctx.fillText(topCalendar, Wposition, ctx.canvas.unobstructedHeight/2 - 12);
+  ctx.fillText(topCalendar, Wposition, ctx.canvas.unobstructedHeight/2 - 18);
   ctx.fillText(bottomCalendar, Wposition, ctx.canvas.unobstructedHeight/2);
 }
 function drawWeather(ctx, weather) {
@@ -104,28 +124,56 @@ function drawWeather(ctx, weather) {
   ctx.fillStyle = 'white';
   ctx.textAlign = 'center';
   ctx.font = fontSize + ' ' + fontFamily;
-  ctx.fillText(weatherString, Wposition, ctx.canvas.unobstructedHeight/2 - 12);
+  ctx.fillText(weatherString, Wposition, ctx.canvas.unobstructedHeight/2 - 18);
   ctx.fillText(weatherDesc, Wposition, ctx.canvas.unobstructedHeight/2);
 }
 
-function drawHand(ctx, cx, cy, angle, length, color) {
+function drawHand(ctx, cx, cy, angle, reverseAngle, length, color) {
   // Find the end points
   var x2 = cx + Math.sin(angle) * length;
   var y2 = cy - Math.cos(angle) * length;
 
   // Configure how we want to draw the hand
-  ctx.lineWidth = 8;
+  ctx.lineWidth = 4;
   ctx.strokeStyle = color;
 
   // Begin drawing
   ctx.beginPath();
 
   // Move to the center point, then draw the line
-  ctx.moveTo(cx, cy);
-  ctx.lineTo(x2, y2);
+  ctx.moveTo(cx, cy);  
+	 ctx.lineTo(x2, y2);
 
   // Stroke the line (output to display)
   ctx.stroke();
+	
+	 drawOtherSide(ctx, cx, cy, reverseAngle, 10, color);
+}
+
+function drawOtherSide(ctx, cx, cy, angle, length, color) {
+  // Find the end points
+  var x2 = cx + Math.sin(angle) * length;
+  var y2 = cy - Math.cos(angle) * length;
+
+  // Configure how we want to draw the hand
+  ctx.lineWidth = 4;
+  ctx.strokeStyle = color;
+
+  // Begin drawing
+  ctx.beginPath();
+
+  // Move to the center point, then draw the line
+  ctx.moveTo(cx, cy);  
+	 ctx.lineTo(x2, y2);
+
+  // Stroke the line (output to display)
+  ctx.stroke();
+}
+
+
+function drawRound(ctx, cx, cy, color) {
+		ctx.fillStyle = color;
+		ctx.rockyFillRadial(cx, cy, 0, 6, 0, 2 * Math.PI);
 }
 
 function fractionToRadian(fraction) {

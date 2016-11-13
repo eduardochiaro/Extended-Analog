@@ -1,5 +1,9 @@
 // PebbleKit JS (pkjs)
 
+//var Clay = require('./clay');
+//var clayConfig = require('./config');
+//var clay = new Clay(clayConfig, null, { autoHandleEvents: false });
+
 var myAPIKey = '66054d3b1bb9f795e5b67d668849a8ea';
 
 Pebble.on('message', function(event) {

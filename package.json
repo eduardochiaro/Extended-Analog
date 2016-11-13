@@ -4,12 +4,13 @@
     "keywords": [
         "pebble-app"
     ],
-    "name": "extendedtictoc",
+    "name": "extendedanalog",
     "pebble": {
         "capabilities": [
-            "location"
+            "location",
+            "configurable"
         ],
-        "displayName": "Extended Tictoc",
+        "displayName": "Extended Analog",
         "enableMultiJS": true,
         "messageKeys": [],
         "projectType": "rocky",
@@ -18,9 +19,7 @@
         },
         "sdkVersion": "3",
         "targetPlatforms": [
-            "basalt",
-            "diorite",
-            "emery"
+            "basalt"
         ],
         "uuid": "85593232-d775-44de-9ec4-37a3c377ecef",
         "watchapp": {
