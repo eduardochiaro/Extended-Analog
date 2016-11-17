@@ -118,7 +118,7 @@ function drawWeather(ctx, weather) {
   var weatherString = weather.fahrenheit + 'ºF';
 	 var weatherDesc = weather.desc;
 	
-	var Wposition = ctx.canvas.unobstructedWidth - 20;
+	 var Wposition = ctx.canvas.unobstructedWidth - 20;
 
   // Draw the text, top center
   ctx.fillStyle = 'white';
@@ -126,6 +126,7 @@ function drawWeather(ctx, weather) {
   ctx.font = fontSize + ' ' + fontFamily;
   ctx.fillText(weatherString, Wposition, ctx.canvas.unobstructedHeight/2 - 18);
   ctx.fillText(weatherDesc, Wposition, ctx.canvas.unobstructedHeight/2);
+  ctx.fillText(weather.city, ctx.canvas.unobstructedWidth / 2, ctx.canvas.unobstructedHeight - 25);
 }
 
 function drawHand(ctx, cx, cy, angle, reverseAngle, length, color) {
