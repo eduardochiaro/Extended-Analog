@@ -7,8 +7,7 @@
     "name": "extendedanalog",
     "pebble": {
         "capabilities": [
-            "location",
-            "configurable"
+            "location"
         ],
         "displayName": "Extended Analog",
         "enableMultiJS": true,
